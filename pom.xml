@@ -82,6 +82,7 @@
         <scala.library.version>2.13.11</scala.library.version>
         <avatica.version>1.23.0</avatica.version>
         <avro.version>1.11.1</avro.version>
+        <jsonassert.version>1.5.1</jsonassert.version>
         <!-- When updating Calcite, also propagate updates to these files which we've copied and modified:
              default_config.fmpp
           -->
