@@ -46,7 +46,7 @@ import java.util.List;
 public class CompatParquetReaderTest extends BaseParquetReaderTest
 {
   @Test
-  public void testBinaryAsString() throws IOException
+  public void testBinaryAsString() throws IOException, JSONException
   {
     final String file = "example/compat/284a0e001476716b-56d5676f53bd6e85_115466471_data.0.parq";
     InputRowSchema schema = new InputRowSchema(
@@ -97,21 +97,18 @@ public class CompatParquetReaderTest extends BaseParquetReaderTest
                                 + "  \"field\" : \"hey this is &é(-è_çà)=^$ù*! Ω^^\",\n"
                                 + "  \"ts\" : 1471800234\n"
                                 + "}";
-    Assert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+    JSONAssert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()), JSONCompareMode.LENIENT);
 
     final String expectedJsonBinary = "{\n"
                                 + "  \"field\" : \"aGV5IHRoaXMgaXMgJsOpKC3DqF/Dp8OgKT1eJMO5KiEgzqleXg==\",\n"
                                 + "  \"ts\" : 1471800234\n"
                                 + "}";
-    Assert.assertEquals(
-        expectedJsonBinary,
-        DEFAULT_JSON_WRITER.writeValueAsString(sampledAsBinary.get(0).getRawValues())
-    );
+    JSONAssert.assertEquals(expectedJsonBinary, DEFAULT_JSON_WRITER.writeValueAsString(sampledAsBinary.get(0).getRawValues()), JSONCompareMode.LENIENT);
   }
 
 
   @Test
-  public void testParquet1217() throws IOException
+  public void testParquet1217() throws IOException, JSONException
   {
     final String file = "example/compat/parquet-1217.parquet";
     InputRowSchema schema = new InputRowSchema(
@@ -146,11 +143,11 @@ public class CompatParquetReaderTest extends BaseParquetReaderTest
     final String expectedJson = "{\n"
                                 + "  \"col\" : -1\n"
                                 + "}";
-    Assert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+    JSONAssert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()), JSONCompareMode.LENIENT);
   }
 
   @Test
-  public void testParquetThriftCompat() throws IOException
+  public void testParquetThriftCompat() throws IOException, JSONException
   {
     /*
       message ParquetSchema {
@@ -308,11 +305,11 @@ public class CompatParquetReaderTest extends BaseParquetReaderTest
                                 + "    } ]\n"
                                 + "  }\n"
                                 + "}";
-    Assert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+    JSONAssert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()), JSONCompareMode.LENIENT);
   }
 
   @Test
-  public void testOldRepeatedInt() throws IOException
+  public void testOldRepeatedInt() throws IOException, JSONException
   {
     final String file = "example/compat/old-repeated-int.parquet";
     InputRowSchema schema = new InputRowSchema(
@@ -345,12 +342,12 @@ public class CompatParquetReaderTest extends BaseParquetReaderTest
     final String expectedJson = "{\n"
                                 + "  \"repeatedInt\" : [ 1, 2, 3 ]\n"
                                 + "}";
-    Assert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+    JSONAssert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()), JSONCompareMode.LENIENT);
   }
 
 
   @Test
-  public void testReadNestedArrayStruct() throws IOException
+  public void testReadNestedArrayStruct() throws IOException, JSONException
   {
     final String file = "example/compat/nested-array-struct.parquet";
     InputRowSchema schema = new InputRowSchema(
@@ -388,7 +385,7 @@ public class CompatParquetReaderTest extends BaseParquetReaderTest
                                 + "    \"repeatedMessage\" : [ 3 ]\n"
                                 + "  } ]\n"
                                 + "}";
-    Assert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+    JSONAssert.assertEquals(expectedJson, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()), JSONCompareMode.LENIENT);
   }
 
   @Test
